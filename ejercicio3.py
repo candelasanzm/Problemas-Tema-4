@@ -56,4 +56,31 @@ res = devolver_cantidad_exacta(billetes, D)
 print(res)
 
 def test_devolver_cantidad_exacta():
-    
+    billetes = [
+        billetes_dict(1, 10),
+        billetes_dict(2, 5),
+        billetes_dict(5, 2),
+        billetes_dict(10, 2),
+        billetes_dict(20, 1),
+    ]
+
+    # Caso donde se puede devolver la cantidad exacta
+    D1 = 27
+    resultado1 = (True, [0, 1, 1, 0, 1])
+    assert devolver_cantidad_exacta(billetes, D1) == resultado1
+
+    # Caso donde no se puede devolver la cantidad exacta
+    D2 = 90
+    resultado2 = (False, [])
+    assert devolver_cantidad_exacta(billetes, D2) == resultado2
+
+    # Caso con una cantidad exacta y un único tipo de billetes
+    billetes2 = [billetes_dict(10, 3)]
+    D3 = 20
+    resultado3 = (True, [2])
+    assert devolver_cantidad_exacta(billetes2, D3) == resultado3
+
+    # Caso con D = 0
+    D4 = 0
+    resultado4 = (True, [0, 0, 0, 0, 0])
+    assert devolver_cantidad_exacta(billetes, D4) == resultado4
