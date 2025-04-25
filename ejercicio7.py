@@ -1,3 +1,5 @@
+# FUNCIONES
+
 def secuencias(a,b):
     n = len(a)
     m = len(b)
@@ -31,55 +33,103 @@ def secuencias(a,b):
     subsec.reverse()
     return matriz[n][m], subsec
 
-a = [0,1,1,0,1,0,1,0]
-b = [1,0,1,0,0,1,0,0,1]
 
+# CASOS DE PRUEBA
+casos_prueba = [
+    # Caso estándar
+    ([0, 1, 1, 0, 1, 0, 1, 0], [1, 0, 1, 0, 0, 1, 0, 0, 1]),
+    
+    # Caso con una única coincidencia
+    ([1, 2, 3], [4, 5, 1]),
+    
+    # Caso sin subsecuencia común
+    ([0, 0, 0], [1, 1, 1]),
+    
+    # Caso con valores repetitivos
+    ([1, 1, 1, 1, 1, 2, 1], [1, 1, 1, 2, 1, 1, 1]),
+    
+    # Caso con una lista vacía
+    ([], [1, 2, 3]),
+    
+    # Caso con ambas listas vacías
+    ([], []),
+    
+    # Caso extremo: lista larga vs corta
+    ([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], [5, 6])
+]
 
-long, subsecuencia = secuencias(a,b)
-print("Longitud maxima: ", long)
-print("Subsecuencia común", subsecuencia)
+# Ejecutar casos de prueba
+for a, b in casos_prueba:
+    long, subsec = secuencias(a, b)
+    print(f"\nProbando con:\na = {a}\nb = {b}")
+    print(f"Longitud máxima: {long}")
+    print(f"Subsecuencia común: {subsec}")
+
+# TEST    
 
 def test_secuencias():
-    #Prueba 1: secuencias cortas 
-    a1 = [1,0,1,1]
-    b1 = [0,1,1,0]
 
-    long_esp1 = 3
-    sec_esp1 = [0,1,1]
-
-    long1, subsec1 = secuencias(a1,b1)
+    # Caso 1: estándar
+    a1 = [0, 1, 1, 0, 1, 0, 1, 0]
+    b1 = [1, 0, 1, 0, 0, 1, 0, 0, 1]
+    long_esp1 = 6
+    sec_esp1 = [0, 1, 1, 0, 0, 1]
+    long1, subsec1 = secuencias(a1, b1)
     assert long_esp1 == long1
     assert sec_esp1 == subsec1
 
-    #Prueba 2: secuencias largas
-    a2 = [0,1,1,0,1,0,1,0]
-    b2 = [1,0,1,0,0,1,0,0,1]
-
-    long_esp2 = 6
-    sec_esp2 = [0,1,1,0,0,1]
-
-    long2, subsec2 = secuencias(a2,b2)
+    # Caso 2: una única coincidencia
+    a2 = [1, 2, 3]
+    b2 = [4, 5, 1]
+    long_esp2 = 1
+    sec_esp2 = [1]
+    long2, subsec2 = secuencias(a2, b2)
     assert long_esp2 == long2
     assert sec_esp2 == subsec2
-    
-    #Prueba 3: no hay subsecuencias en común
-    a3 = [0,0,0]
-    b3 = [1,1,1]
 
+    # Caso 3: sin subsecuencia común
+    a3 = [0, 0, 0]
+    b3 = [1, 1, 1]
     long_esp3 = 0
     sec_esp3 = []
-
-    long3, subsec3 = secuencias(a3,b3)
+    long3, subsec3 = secuencias(a3, b3)
     assert long_esp3 == long3
     assert sec_esp3 == subsec3
 
-    #Prueba 4: coinciden 
-    a4 = [1,0,1,1]
-    b4 = [1,0,1,1]
-
-    long_esp4 = 4
-    sec_esp4 = [1,0,1,1]
-
-    long4, subsec4 = secuencias(a4,b4)
+    # Caso 4: valores repetitivos
+    a4 = [1, 1, 1, 1, 1, 2, 1]
+    b4 = [1, 1, 1, 2, 1, 1, 1]
+    long_esp4 = 6
+    sec_esp4 = [1, 1, 1, 1, 1, 1]
+    long4, subsec4 = secuencias(a4, b4)
     assert long_esp4 == long4
     assert sec_esp4 == subsec4
+
+    # Caso 5: una lista vacía
+    a5 = []
+    b5 = [1, 2, 3]
+    long_esp5 = 0
+    sec_esp5 = []
+    long5, subsec5 = secuencias(a5, b5)
+    assert long_esp5 == long5
+    assert sec_esp5 == subsec5
+
+    # Caso 6: ambas listas vacías
+    a6 = []
+    b6 = []
+    long_esp6 = 0
+    sec_esp6 = []
+    long6, subsec6 = secuencias(a6, b6)
+    assert long_esp6 == long6
+    assert sec_esp6 == subsec6
+
+    # Caso 7, extremo: lista larga vs corta
+    a7 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    b7 = [5, 6]
+
+    long_esp7 = 2
+    sec_esp7 = [5, 6]
+
+    long7, subsec7 = secuencias(a7, b7)
+    assert long_esp7 == long7
+    assert sec_esp7 == subsec7
