@@ -1,37 +1,46 @@
 # FUNCIONES
 
-def secuencias(a,b):
+def secuencias(a : list, b : list) -> tuple[int, list]:
+
+    # Obtenemos las longitudes de las listas de entrada
     n = len(a)
     m = len(b)
+
+    # Inicializamos la matriz con ceros
     matriz = []
-    #construir la matriz
-    for i in range(n+1):
-        fila=[]
-        for j in range(m+1):
-            fila.append(0)
+
+    # Construir la matriz
+    for i in range(n + 1):
+        fila = []
+        for j in range(m + 1):
+            fila.append(0) # Cada posición se llena con 0
         matriz.append(fila)
-    #llenar la matriz
-    for i in range(1, n+1):
-        for j in range(1, m+1):
-            if a[i-1] == b[j-1]:
-                matriz[i][j] = matriz[i-1][j-1] + 1
+
+    # Llenar la matriz haciendo uso de la programación dinámica
+    for i in range(1, n + 1):
+        for j in range(1, m + 1):
+            if a[i - 1] == b[j - 1]: # Si los elementos coinciden
+                matriz[i][j] = matriz[ i- 1][j - 1] + 1 # Se incrementa el valor
             else:
-                matriz[i][j] = max(matriz[i-1][j], matriz[i][j-1])
-    #subsecuencia común
+                matriz[i][j] = max(matriz[i - 1][j], matriz[i][j - 1]) # Si no coinciden, se toma el máximo
+    
+    # Subsecuencia común más larga
     i = n
     j = m
-    subsec = []
-    while i>0 and j>0:
-        if a[i-1] == b[j-1]:
-            subsec.append(a[i-1])
-            i-=1
-            j-=1
-        elif matriz[i-1][j] >= matriz[i][j-1]:
-            i-=1
+    subsec = [] # Lista para almcenar la subsecuencia
+
+    while i > 0 and j > 0:
+        if a[i - 1] == b[j - 1]: # Si hay coincidencia
+            subsec.append(a[i - 1]) # Se añade el elemento
+            i -= 1
+            j -= 1
+        elif matriz[i - 1][j] >= matriz[i][j - 1]: # Si el valor de arriba es mayor
+            i -= 1 # Se mueve hacia arriba en la matriz
         else:
-            j-=1
-    subsec.reverse()
-    return matriz[n][m], subsec
+            j -= 1 # Se mueve hacia la izquierda
+
+    subsec.reverse() # Se invierte la lista para obtener el orden correcto
+    return matriz[n][m], subsec # Retorna la longitud y la subsecuencia
 
 
 # CASOS DE PRUEBA
