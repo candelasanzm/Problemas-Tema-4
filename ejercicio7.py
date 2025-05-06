@@ -142,3 +142,56 @@ def test_secuencias():
     long7, subsec7 = secuencias(a7, b7)
     assert long_esp7 == long7
     assert sec_esp7 == subsec7
+
+# TEST DE RENDIMIENTO
+
+# Test de rendimiento para un caso estándar
+def test_secuencias_benchmark(benchmark):
+    a = [0, 1, 1, 0, 1, 0, 1, 0]
+    b = [1, 0, 1, 0, 0, 1, 0, 0, 1]
+
+    def funcion_test_benchmark():
+        long, subsec = secuencias(a, b)
+        assert long == 6
+        assert subsec == [0, 1, 1, 0, 0, 1]
+        return long, subsec
+
+    benchmark(funcion_test_benchmark)
+
+# Test de rendimiento para un caso sin subsecuencia común
+def test_secuencias_sin_coincidencias_benchmark(benchmark):
+    a = [0, 0, 0]
+    b = [1, 1, 1]
+
+    def funcion_test_benchmark():
+        long, subsec = secuencias(a, b)
+        assert long == 0
+        assert subsec == []
+        return long, subsec
+
+    benchmark(funcion_test_benchmark)
+
+# Test de rendimiento para una lista vacía
+def test_secuencias_lista_vacia_benchmark(benchmark):
+    a = []
+    b = [1, 2, 3]
+
+    def funcion_test_benchmark():
+        long, subsec = secuencias(a, b)
+        assert long == 0
+        assert subsec == []
+        return long, subsec
+
+    benchmark(funcion_test_benchmark)
+
+# Test de rendimiento para un caso extremo (lista larga)
+def test_secuencias_grande_benchmark(benchmark):
+    a = list(range(1000))
+    b = list(range(500, 1500))
+
+    def funcion_test_benchmark():
+        long, subsec = secuencias(a, b)
+        assert long > 0  # Verifica que encuentra una subsecuencia
+        return long, subsec
+
+    benchmark(funcion_test_benchmark)

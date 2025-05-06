@@ -138,3 +138,58 @@ def test_devolver_cantidad_exacta():
     D9 = 15
     resultado9 = (True, [15])
     assert devolver_cantidad_exacta(billetes6, D9) == resultado9
+
+# TEST DE RENDIMIENTO
+# Test de rendimiento para un caso estándar
+def test_devolver_cantidad_exacta_benchmark(benchmark):
+    billetes = [
+        billetes_dict(1, 10),
+        billetes_dict(2, 5),
+        billetes_dict(5, 2),
+        billetes_dict(10, 2),
+        billetes_dict(20, 1),
+    ]
+    D = 27
+
+    def funcion_test_benchmark():
+        resultado = devolver_cantidad_exacta(billetes, D)
+        assert resultado[0]  # Debe encontrar una solución válida
+        return resultado
+
+    benchmark(funcion_test_benchmark)
+
+# Test de rendimiento para un caso sin solución
+def test_devolver_cantidad_exacta_sin_solucion_benchmark(benchmark):
+    billetes = [billetes_dict(3, 4), billetes_dict(7, 2)]
+    D = 5
+
+    def funcion_test_benchmark():
+        resultado = devolver_cantidad_exacta(billetes, D)
+        assert not resultado[0]  # No debe encontrar solución
+        return resultado
+
+    benchmark(funcion_test_benchmark)
+
+# Test de rendimiento para una cantidad exacta con un único billete
+def test_devolver_cantidad_exacta_unico_billete_benchmark(benchmark):
+    billetes = [billetes_dict(10, 3)]
+    D = 20
+
+    def funcion_test_benchmark():
+        resultado = devolver_cantidad_exacta(billetes, D)
+        assert resultado == (True, [2])  # Debe encontrar solución exacta
+        return resultado
+
+    benchmark(funcion_test_benchmark)
+
+# Test de rendimiento para un caso grande
+def test_devolver_cantidad_exacta_grande_benchmark(benchmark):
+    billetes = [billetes_dict(i, 5) for i in range(1, 51)]  # 50 tipos de billetes
+    D = 1000
+
+    def funcion_test_benchmark():
+        resultado = devolver_cantidad_exacta(billetes, D)
+        assert resultado[0]  # Verifica si encuentra alguna solución
+        return resultado
+
+    benchmark(funcion_test_benchmark)
